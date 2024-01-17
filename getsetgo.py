@@ -4,27 +4,22 @@ app = Flask(__name__)
 
 @app.route('/')
 def homepage():
-    return <html><body><h1> Welcome to homepage</h1></body></html>
+    return '''<html><body><h1> Welcome to homepage</h1></body></html>'''
 
 @app.route(rule='/user', methods = ['GET'])
 def get_user():
-    return '''
-        <form method="POST">
-        <div><label> Enter first name: <input type='text' name='firstname'> </label></div>
-        <div><label> Enter last name: <input type='text' name='lastname'> </label></div>
-        <input type='submit' value='Submit'>
-        </form>'''
+    return f'My name is {request.args.get("firstname")} {request.args.get("lastname")}'
+    
 
+@app.route('/home/<username>')
+def username_display2(username):
+    return username
 
 @app.route(rule='/user', methods = ['POST'])
 def username_display():
-    firstname = request.form.get('firstname')
-    lastname = request.form.get('lastname')
-    name = {1: firstname, 2: lastname}
-    return '''
-    <html><body><h1> The name associated with {1} is: {2} </h1></body></html>'''.format_map(name)
-
-
+    print(request.json)
+    data = request.json
+    return f'My name is {data.get("firstname")} {data.get("lastname")}. You can call me on {data.get("contact")}.'
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=6666)
