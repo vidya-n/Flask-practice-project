@@ -25,6 +25,11 @@ def username_display():
     <html><body><h1> The name associated with {1} is: {2} </h1></body></html>'''.format_map(name)
 
 
+@app.route(rule= '/contact_loc', methods = ['GET'])
+def contact1():
+    args= request.args
+    return  args
+
 
 if __name__ == '__main__':
     app.run(debug=True)
